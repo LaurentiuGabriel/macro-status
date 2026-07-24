@@ -260,13 +260,28 @@
 
   // ---- boot ----------------------------------------------------------------
   function boot() {
-    // meta line
-    document.getElementById("gen-date").textContent = fmtFullDate(parseDate(DATA.generated));
+    // meta line (elements are optional — never let a missing node abort boot)
+    function setText(id, txt) { var n = document.getElementById(id); if (n) n.textContent = txt; }
+    setText("gen-date", fmtFullDate(parseDate(DATA.generated)));
     var span = DATA.indicators[0].range;
-    document.getElementById("range-line").textContent = span.from.slice(0, 4) + "–" + DATA.indicators.reduce(function (m, i) { return i.range.to > m ? i.range.to : m; }, "0").slice(0, 4);
+    setText("range-line", span.from.slice(0, 4) + "–" +
+      DATA.indicators.reduce(function (m, i) { return i.range.to > m ? i.range.to : m; }, "0").slice(0, 4));
 
-    // group indicators into category sections (order = first appearance)
-    var host = document.getElementById("sections");
+    // group indicators into category sections (order = first appearance).
+    // Resolve the host defensively: a browser holding a cached copy of an older
+    // index.html would otherwise hand us null here and throw. Fall back to the
+    // legacy container id, then to <main>, then create one.
+    var host = document.getElementById("sections") || document.getElementById("grid")
+            || document.querySelector("main");
+    if (!host) {
+      host = document.createElement("main");
+      host.id = "sections";
+      var anchor = document.querySelector(".toolbar");
+      if (anchor && anchor.parentNode) anchor.parentNode.insertBefore(host, anchor.nextSibling);
+      else document.body.appendChild(host);
+    }
+    // the legacy container carried .grid itself; sections bring their own grids
+    host.classList.remove("grid");
     var order = [], groups = {};
     DATA.indicators.forEach(function (ind) {
       if (!groups[ind.cat]) { groups[ind.cat] = []; order.push(ind.cat); }

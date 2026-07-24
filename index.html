@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Macro Impact Dashboard — highest-impact economic-calendar indicators</title>
   <meta name="description" content="Ten years of the highest-impact US macro indicators that top the Investing.com economic calendar, plotted from official FRED data." />
-  <link rel="stylesheet" href="assets/styles.css" />
+  <!-- ?v= is a cache-buster: bump it whenever assets change so browsers can't
+       pair a fresh index.html with a stale styles.css / app.js. -->
+  <link rel="stylesheet" href="assets/styles.css?v=2" />
 </head>
 <body>
   <div class="wrap">
@@ -68,7 +70,7 @@
     </footer>
   </div>
 
-  <script src="assets/data.js"></script>
-  <script src="assets/app.js"></script>
+  <script src="assets/data.js?v=2"></script>
+  <script src="assets/app.js?v=2"></script>
 </body>
 </html>
