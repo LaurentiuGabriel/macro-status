@@ -30,9 +30,10 @@
   function fmtNum(v, dec) {
     return v.toLocaleString("en-US", { minimumFractionDigits: dec, maximumFractionDigits: dec });
   }
+  function valueSuffix(ind) { return ind.unit === "%" ? "%" : ind.unit === "M" ? "M" : "K"; }
+  function deltaSuffix(ind) { return ind.unit === "%" ? "pp" : ind.unit === "M" ? "M" : "K"; }
   function fmtValue(v, ind, forceSign) {
-    var suffix = ind.unit === "%" ? "%" : "K";
-    var s = fmtNum(v, ind.decimals) + suffix;
+    var s = fmtNum(v, ind.decimals) + valueSuffix(ind);
     if (forceSign && v > 0) s = "+" + s;
     return s;
   }
@@ -168,15 +169,18 @@
     return wrap;
   }
 
-  // ---- impact badge (three ascending bars) ---------------------------------
-  function impactBadge() {
-    var b = h("span", "impact");
+  // ---- impact badge (ascending bars; fill count = impact tier) -------------
+  function impactBadge(impact) {
+    var high = impact === "high";
+    var filled = high ? 3 : 2;
+    var b = h("span", "impact " + (high ? "high" : "medium"));
     var svg = el("svg", { width: 13, height: 11, viewBox: "0 0 13 11" });
-    [[0, 7], [5, 4], [10, 1]].forEach(function (p) {
-      svg.appendChild(el("rect", { x: p[0], y: p[1], width: 3, height: 11 - p[1], rx: 0.7, fill: "currentColor" }));
+    [[0, 7], [5, 4], [10, 1]].forEach(function (p, i) {
+      svg.appendChild(el("rect", { x: p[0], y: p[1], width: 3, height: 11 - p[1], rx: 0.7,
+        fill: "currentColor", "fill-opacity": i < filled ? 1 : 0.28 }));
     });
     b.appendChild(svg);
-    b.appendChild(document.createTextNode("HIGH IMPACT"));
+    b.appendChild(document.createTextNode(high ? "HIGH IMPACT" : "MEDIUM IMPACT"));
     return b;
   }
 
@@ -184,7 +188,7 @@
   function deltaPill(ind) {
     if (ind.prev == null) return null;
     var diff = ind.latest.value - ind.prev;
-    var suffix = ind.unit === "%" ? "pp" : "K";
+    var suffix = deltaSuffix(ind);
     var dir = diff > 0 ? "up" : diff < 0 ? "down" : "flat";
     var arrow = diff > 0 ? "▲" : diff < 0 ? "▼" : "—";
     var cls;
@@ -200,8 +204,8 @@
     var card = h("div", "card");
 
     var head = h("div", "card-head");
-    head.appendChild(h("h2", "card-title", ind.name));
-    head.appendChild(impactBadge());
+    head.appendChild(h("h3", "card-title", ind.name));
+    head.appendChild(impactBadge(ind.impact));
     card.appendChild(head);
 
     card.appendChild(h("p", "blurb", ind.blurb));
@@ -261,8 +265,25 @@
     var span = DATA.indicators[0].range;
     document.getElementById("range-line").textContent = span.from.slice(0, 4) + "–" + DATA.indicators.reduce(function (m, i) { return i.range.to > m ? i.range.to : m; }, "0").slice(0, 4);
 
-    var grid = document.getElementById("grid");
-    DATA.indicators.forEach(function (ind) { grid.appendChild(buildCard(ind)); });
+    // group indicators into category sections (order = first appearance)
+    var host = document.getElementById("sections");
+    var order = [], groups = {};
+    DATA.indicators.forEach(function (ind) {
+      if (!groups[ind.cat]) { groups[ind.cat] = []; order.push(ind.cat); }
+      groups[ind.cat].push(ind);
+    });
+    order.forEach(function (cat) {
+      var list = groups[cat];
+      var sec = h("section", "section");
+      var shead = h("div", "section-head");
+      shead.appendChild(h("h2", "section-title", cat));
+      shead.appendChild(h("span", "section-count", list.length + (list.length > 1 ? " indicators" : " indicator")));
+      sec.appendChild(shead);
+      var grid = h("div", "grid");
+      list.forEach(function (ind) { grid.appendChild(buildCard(ind)); });
+      sec.appendChild(grid);
+      host.appendChild(sec);
+    });
 
     // view toggle
     var views = document.querySelectorAll("#view-toggle button");

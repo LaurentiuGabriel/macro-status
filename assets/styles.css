@@ -19,6 +19,8 @@
   --bad:             #d03b3b;
   --badge-bg:        rgba(208, 59, 59, 0.10);
   --badge-fg:        #b02f2f;
+  --badge-med-bg:    rgba(230, 150, 20, 0.14);
+  --badge-med-fg:    #9a5b0a;
   --shadow:          0 1px 2px rgba(11, 11, 11, 0.05), 0 6px 20px rgba(11, 11, 11, 0.05);
   --font: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
@@ -40,6 +42,8 @@
     --bad:            #e66767;
     --badge-bg:       rgba(230, 103, 103, 0.14);
     --badge-fg:       #e66767;
+    --badge-med-bg:   rgba(250, 178, 25, 0.15);
+    --badge-med-fg:   #e6a92e;
     --shadow:         0 1px 2px rgba(0, 0, 0, 0.4), 0 6px 20px rgba(0, 0, 0, 0.4);
   }
 }
@@ -59,6 +63,8 @@
   --bad:            #e66767;
   --badge-bg:       rgba(230, 103, 103, 0.14);
   --badge-fg:       #e66767;
+  --badge-med-bg:   rgba(250, 178, 25, 0.15);
+  --badge-med-fg:   #e6a92e;
   --shadow:         0 1px 2px rgba(0, 0, 0, 0.4), 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
@@ -108,6 +114,16 @@ h1 { font-size: clamp(24px, 4vw, 36px); line-height: 1.15; margin: 0 0 10px; let
 .spacer { flex: 1 1 auto; }
 .hint { color: var(--text-muted); font-size: 12.5px; }
 
+/* ---- Category sections ----------------------------------------------------*/
+.section { margin-bottom: 26px; }
+.section-head { display: flex; align-items: baseline; gap: 10px; margin: 0 0 12px; }
+.section-title {
+  font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--text-secondary); margin: 0;
+}
+.section-head::after { content: ""; flex: 1 1 auto; height: 1px; background: var(--border); }
+.section-count { color: var(--text-muted); font-size: 12px; flex: none; }
+
 /* ---- Grid of indicator cards ---------------------------------------------*/
 .grid {
   display: grid; gap: 18px;
@@ -127,7 +143,9 @@ h1 { font-size: clamp(24px, 4vw, 36px); line-height: 1.15; margin: 0 0 10px; let
 /* impact badge — three ascending bars, mirrors the calendar's high-volatility rating */
 .impact { display: inline-flex; align-items: center; gap: 6px; margin-left: auto; flex: none;
   background: var(--badge-bg); color: var(--badge-fg); border-radius: 999px;
-  padding: 3px 9px 3px 7px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; }
+  padding: 3px 9px 3px 7px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em;
+  white-space: nowrap; }
+.impact.medium { background: var(--badge-med-bg); color: var(--badge-med-fg); }
 .impact svg { display: block; }
 
 /* stat row */
