@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Macro Impact Dashboard — highest-impact economic-calendar indicators</title>
+  <meta name="description" content="Ten years of the highest-impact US macro indicators that top the Investing.com economic calendar, plotted from official FRED data." />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="masthead">
+      <p class="eyebrow">Economic Calendar · High-Impact Events</p>
+      <h1>Macro Impact Dashboard</h1>
+      <p class="lede">
+        The eight indicators the Investing.com economic calendar flags as
+        <strong>high impact</strong> (its three-bar / high-volatility rating) — the releases
+        that move rates, currencies and equities most. Each is plotted over the last ten years
+        from the official source data.
+      </p>
+      <div class="meta-row">
+        <span>Range: <b id="range-line">—</b></span>
+        <span>Source: <b>FRED · St. Louis Fed</b></span>
+        <span>Data as of: <b id="gen-date">—</b></span>
+      </div>
+    </header>
+
+    <div class="toolbar">
+      <div class="seg" id="view-toggle" role="group" aria-label="View mode">
+        <button data-view="chart" aria-pressed="true">Charts</button>
+        <button data-view="table" aria-pressed="false">Table</button>
+      </div>
+      <div class="spacer"></div>
+      <span class="hint">Hover a chart to read any point</span>
+      <div class="seg">
+        <button id="theme-btn" aria-label="Toggle color theme">Theme: Auto</button>
+      </div>
+    </div>
+
+    <main class="grid" id="grid" aria-label="High-impact macro indicators"></main>
+
+    <footer class="notes">
+      <p>
+        <strong>Why these eight.</strong> The Investing.com economic calendar rates each event's
+        expected volatility with a one-to-three bar/"bull" scale. The three-bar (high-impact) US
+        events are dominated by the same recurring releases shown here: Nonfarm Payrolls, the CPI
+        inflation rate, the Fed interest-rate decision, GDP growth, the unemployment rate, Core PCE,
+        retail sales and initial jobless claims.
+      </p>
+      <p>
+        <strong>Data provenance.</strong> Investing.com does not publish free bulk historical
+        downloads and blocks scraping, but its high-impact events <em>are</em> the official U.S.
+        BLS, BEA, Census Bureau and Federal Reserve releases. Those exact series are republished by
+        <a href="https://fred.stlouisfed.org/" target="_blank" rel="noopener">FRED</a> (Federal
+        Reserve Economic Data), which is the source used here. Each figure is transformed to match
+        how it is reported on the calendar — year-over-year for CPI and Core PCE, month-over-month
+        change for payrolls and retail sales, and as-published for the rest. Rebuild the dataset any
+        time with <code>python scripts/fetch_data.py</code>.
+      </p>
+      <p>
+        For information only — not investment advice. The 2020 spikes across most series are the
+        genuine COVID-19 shock, not data errors.
+      </p>
+    </footer>
+  </div>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
