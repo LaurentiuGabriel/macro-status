@@ -145,6 +145,42 @@ INDICATORS = [
         "unit": "%", "decimals": 1, "freq": "Monthly",
         "source": "Federal Reserve", "good": "up",
     },
+    # ---- Bond Market & Yields ---------------------------------------------
+    # Market-determined rates rather than scheduled statistical releases, so
+    # they carry a "market" tier instead of a calendar impact rating. Daily
+    # series are collapsed to the last observation of each month.
+    {
+        "id": "dgs10", "fred": "DGS10", "transform": "monthly_last",
+        "cat": "Bond Market & Yields", "impact": "market",
+        "name": "10-Year Treasury Yield",
+        "blurb": "The benchmark long rate: it anchors mortgage and corporate borrowing costs. Rising yields signal growth or inflation ahead; falling yields signal a flight to safety.",
+        "unit": "%", "decimals": 2, "freq": "Daily (month-end shown)",
+        "source": "U.S. Treasury via Federal Reserve", "good": "neutral",
+    },
+    {
+        "id": "dgs2", "fred": "DGS2", "transform": "monthly_last",
+        "cat": "Bond Market & Yields", "impact": "market",
+        "name": "2-Year Treasury Yield",
+        "blurb": "The most policy-sensitive maturity — it tracks where markets expect the Fed to set rates over the next two years, often moving before the Fed does.",
+        "unit": "%", "decimals": 2, "freq": "Daily (month-end shown)",
+        "source": "U.S. Treasury via Federal Reserve", "good": "neutral",
+    },
+    {
+        "id": "t10y2y", "fred": "T10Y2Y", "transform": "monthly_last",
+        "cat": "Bond Market & Yields", "impact": "market",
+        "name": "Yield Curve (10Y − 2Y Spread)",
+        "blurb": "The classic recession signal. Below zero the curve is inverted — markets expect rate cuts to fight a slowdown. An inversion has preceded every US recession since the 1970s, typically by 6–18 months.",
+        "unit": "pp", "decimals": 2, "freq": "Daily (month-end shown)",
+        "source": "Federal Reserve", "good": "up",
+    },
+    {
+        "id": "baa10y", "fred": "BAA10Y", "transform": "monthly_last",
+        "cat": "Bond Market & Yields", "impact": "market",
+        "name": "Credit Spread (Baa − 10Y Treasury)",
+        "blurb": "What medium-grade corporate borrowers pay above Treasuries. Widening spreads mean investors demand more for default risk — an early warning of credit stress and tightening financial conditions.",
+        "unit": "pp", "decimals": 2, "freq": "Daily (month-end shown)",
+        "source": "Moody's via Federal Reserve", "good": "down",
+    },
     # ---- Productivity & Costs ---------------------------------------------
     {
         "id": "productivity", "fred": "OPHNFB", "transform": "qoq_annualized",

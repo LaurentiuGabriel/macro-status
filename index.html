@@ -4,22 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Macro Impact Dashboard — highest-impact economic-calendar indicators</title>
-  <meta name="description" content="Ten years of the highest-impact US macro indicators that top the Investing.com economic calendar, plotted from official FRED data." />
+  <meta name="description" content="Ten years of the highest-impact US macro indicators from the Investing.com economic calendar — labor, inflation, growth, housing, industry, productivity and bond yields — plotted from official FRED data." />
   <!-- ?v= is a cache-buster: bump it whenever assets change so browsers can't
        pair a fresh index.html with a stale styles.css / app.js. -->
-  <link rel="stylesheet" href="assets/styles.css?v=2" />
+  <link rel="stylesheet" href="assets/styles.css?v=3" />
 </head>
 <body>
   <div class="wrap">
     <header class="masthead">
-      <p class="eyebrow">Economic Calendar · High-Impact Events</p>
+      <p class="eyebrow">Economic Calendar · High-Impact Events &amp; Market Rates</p>
       <h1>Macro Impact Dashboard</h1>
       <p class="lede">
-        Fifteen indicators from the Investing.com economic calendar, grouped by theme — the
-        <strong>high-impact</strong> (three-bar / high-volatility) releases that move rates,
-        currencies and equities most, alongside key <strong>medium-impact</strong> housing,
-        industry and productivity gauges. Each is plotted over the last ten years from the
-        official source data.
+        Nineteen macro indicators grouped by theme — the <strong>high-impact</strong> (three-bar /
+        high-volatility) Investing.com calendar releases that move rates, currencies and equities
+        most, key <strong>medium-impact</strong> housing, industry and productivity gauges, and the
+        <strong>bond-market rates</strong> that price in what comes next. Each is plotted over the
+        last ten years from the official source data.
       </p>
       <div class="meta-row">
         <span>Range: <b id="range-line">—</b></span>
@@ -54,6 +54,21 @@
         the macro picture.
       </p>
       <p>
+        <strong>What bond yields predict.</strong> Everything else here reports what the economy
+        <em>did</em>; bond yields price what investors think it <em>will do</em>, continuously. The
+        <em>2-year</em> yield is the market's forecast of Fed policy over the next two years. The
+        <em>10-year</em> yield sets mortgage and corporate borrowing costs and reflects long-run
+        growth and inflation expectations. The gap between them — the <em>yield curve</em> — is the
+        best-known recession indicator there is: when it turns negative (inverted), investors expect
+        the Fed to be cutting rates into a slowdown, and every US recession since the 1970s has been
+        preceded by an inversion, typically by 6–18 months (though it has also produced false
+        alarms, and the 2022–24 inversion was the longest on record). The <em>credit spread</em> —
+        what medium-grade corporate borrowers pay above Treasuries — widens when investors demand
+        more compensation for default risk, making it an early read on credit stress. Because these
+        are continuously traded market rates rather than scheduled releases, they carry a
+        <em>market rate</em> tag instead of a calendar impact rating.
+      </p>
+      <p>
         <strong>Data provenance.</strong> Investing.com does not publish free bulk historical
         downloads and blocks scraping, but its high-impact events <em>are</em> the official U.S.
         BLS, BEA, Census Bureau and Federal Reserve releases. Those exact series are republished by
@@ -70,7 +85,7 @@
     </footer>
   </div>
 
-  <script src="assets/data.js?v=2"></script>
-  <script src="assets/app.js?v=2"></script>
+  <script src="assets/data.js?v=3"></script>
+  <script src="assets/app.js?v=3"></script>
 </body>
 </html>

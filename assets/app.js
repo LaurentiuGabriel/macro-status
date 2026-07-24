@@ -30,8 +30,14 @@
   function fmtNum(v, dec) {
     return v.toLocaleString("en-US", { minimumFractionDigits: dec, maximumFractionDigits: dec });
   }
-  function valueSuffix(ind) { return ind.unit === "%" ? "%" : ind.unit === "M" ? "M" : "K"; }
-  function deltaSuffix(ind) { return ind.unit === "%" ? "pp" : ind.unit === "M" ? "M" : "K"; }
+  // "pp" (percentage points) is used by spreads, where the value itself is a
+  // difference — its delta is also in pp.
+  function valueSuffix(ind) {
+    return ind.unit === "%" ? "%" : ind.unit === "M" ? "M" : ind.unit === "pp" ? " pp" : "K";
+  }
+  function deltaSuffix(ind) {
+    return ind.unit === "%" || ind.unit === "pp" ? "pp" : ind.unit === "M" ? "M" : "K";
+  }
   function fmtValue(v, ind, forceSign) {
     var s = fmtNum(v, ind.decimals) + valueSuffix(ind);
     if (forceSign && v > 0) s = "+" + s;
@@ -169,8 +175,20 @@
     return wrap;
   }
 
-  // ---- impact badge (ascending bars; fill count = impact tier) -------------
+  // ---- impact badge --------------------------------------------------------
+  // Calendar releases get ascending bars (fill count = impact tier). Bond
+  // yields are continuously traded market rates, not scheduled events, so they
+  // get their own "market rate" badge rather than a borrowed impact rating.
   function impactBadge(impact) {
+    if (impact === "market") {
+      var m = h("span", "impact market");
+      var msvg = el("svg", { width: 13, height: 11, viewBox: "0 0 13 11" });
+      msvg.appendChild(el("path", { d: "M0.5 8.5 L4 5 L6.5 7 L12.5 1.5", fill: "none",
+        stroke: "currentColor", "stroke-width": 1.8, "stroke-linecap": "round", "stroke-linejoin": "round" }));
+      m.appendChild(msvg);
+      m.appendChild(document.createTextNode("MARKET RATE"));
+      return m;
+    }
     var high = impact === "high";
     var filled = high ? 3 : 2;
     var b = h("span", "impact " + (high ? "high" : "medium"));

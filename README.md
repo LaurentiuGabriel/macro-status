@@ -3,14 +3,15 @@
 A **fully static** web page that plots the macro indicators from the
 [Investing.com economic calendar](https://www.investing.com/economic-calendar/),
 grouped by theme and tagged with the calendar's volatility rating — **high impact**
-(three-bar) and **medium impact** (two-bar) — over the last **10 years**.
+(three-bar) and **medium impact** (two-bar) — plus the **bond-market rates** that
+price in what comes next, over the last **10 years**.
 
 Open `index.html` in any browser. No build step, no server, no internet, no
 dependencies — the data is embedded in the page.
 
 ![charts](.)
 
-## The 15 indicators
+## The 19 indicators
 
 | Category | Indicator | Impact | Reported as | FRED series | Source |
 |---|---|---|---|---|---|
@@ -27,8 +28,33 @@ dependencies — the data is embedded in the page.
 | Industry & Output | Industrial Production | Medium | Month-over-month % | `INDPRO` | Federal Reserve |
 | Industry & Output | Durable Goods Orders | Medium | Month-over-month % | `DGORDER` | Census Bureau |
 | Industry & Output | Capacity Utilization | Medium | % of capacity | `TCU` | Federal Reserve |
+| Bond Market & Yields | 10-Year Treasury Yield | Market | % (month-end) | `DGS10` | U.S. Treasury |
+| Bond Market & Yields | 2-Year Treasury Yield | Market | % (month-end) | `DGS2` | U.S. Treasury |
+| Bond Market & Yields | Yield Curve (10Y − 2Y) | Market | pp (month-end) | `T10Y2Y` | Federal Reserve |
+| Bond Market & Yields | Credit Spread (Baa − 10Y) | Market | pp (month-end) | `BAA10Y` | Moody's / Fed |
 | Productivity & Costs | Nonfarm Productivity | Medium | QoQ annualized % | `OPHNFB` | BLS |
 | Productivity & Costs | Unit Labor Costs | Medium | QoQ annualized % | `ULCNFB` | BLS |
+
+### What the bond yields predict
+
+Every other series reports what the economy *did*. Bond yields price what
+investors think it *will do*, continuously:
+
+- **2-Year yield** — the market's forecast of Fed policy over the next two years;
+  it often moves before the Fed does.
+- **10-Year yield** — sets mortgage and corporate borrowing costs; reflects
+  long-run growth and inflation expectations.
+- **Yield curve (10Y − 2Y)** — the best-known recession indicator. Negative
+  ("inverted") means investors expect the Fed to be cutting into a slowdown.
+  Every US recession since the 1970s was preceded by an inversion, typically by
+  6–18 months — though it has also produced false alarms, and the 2022–24
+  inversion (visible in the data here) was the longest on record.
+- **Credit spread (Baa − 10Y)** — what medium-grade corporate borrowers pay over
+  Treasuries. Widening = investors demanding more for default risk; an early
+  read on credit stress and tightening financial conditions.
+
+These are continuously traded market rates rather than scheduled releases, so
+they carry a **Market rate** tag instead of a calendar impact rating.
 
 ## Where the data comes from
 
